@@ -205,13 +205,13 @@ tbl.week.sum <- tbl.week %>% group_by(interval,DayType) %>% summarise(avgsteps =
 ```
 
 Create panel plot by utilising **facet_grid()** to generate two line plots based on ***DayType***.
-```{r}
+```{r create panel plot}
 ggplot(tbl.week.sum,aes(x=interval,y=avgsteps)) + geom_line(color="blue", size = 1) + facet_grid(DayType ~ .) +  labs(title= "Plot 4",y="Average Steps",x="Interval")
 ```
 
 According to the plots above, both weekday dan weekend patterns are similar with peaks between 0700 and 1000hours. However, the steps for weekend are more evenly spread from 0700 to 2000hours, ranging from 25 to around 150 steps. For weekdays, excluding the spike between 0730 and 1000hours, from 1000 to 2000hours sees average steps ranging from 25 to 125 steps.
 
-Following are comparison of  max, min, mean and median for weekdays and weekend.
+Following are comparison of  max, mean and median for weekdays and weekend.
 
 Calculate interval with maximum average steps for weekday and weekend by first filtering by ***DayType*** and then using **which.max()**.
 ```{r max for weekday and weekend}
@@ -225,16 +225,7 @@ max_step_weekend
 For weekday, interval **`r max_step_weekday$interval`** has maximum average steps of **`r max_step_weekday$avgsteps`**.
 For weekend, interval **`r max_step_weekend$interval`** has maximum average steps of **`r max_step_weekend$avgsteps`**.
 
-
-
-```{r min for weekday and weekend}
-min_step_weekday <- tbl.week.sum[tbl.week.sum$DayType == "Weekday",]
-min_step_weekday <- min_step_weekday[which.min(min_step_weekday$avgsteps),]
-
-min_step_weekend <- tbl.week.sum[tbl.week.sum$DayType == "Weekend",]
-min_step_weekend <- min_step_weekend[which.min(min_step_weekend$avgsteps),]
-```
-
+Calculate mean steps for weekday and weekend by first filtering by ***DayType*** and then using **mean()**.
 ```{r mean for weekday and weekend}
 mean_step_weekday <- tbl.week.sum[tbl.week.sum$DayType == "Weekday",]
 mean(mean_step_weekday$avgsteps)
@@ -242,7 +233,10 @@ mean(mean_step_weekday$avgsteps)
 mean_step_weekend <- tbl.week.sum[tbl.week.sum$DayType == "Weekend",]
 mean(mean_step_weekend$avgsteps)
 ```
+For weekday, the mean average steps is **`r mean(mean_step_weekday$avgsteps)`**.
+For weekend, the mean average steps is **`r mean(mean_step_weekend$avgsteps)`**.
 
+Calculate median average steps for weekday and weekend by first filtering by ***DayType*** and then using **median()**.
 ```{r median for weekday and weekend}
 median_step_weekday <- tbl.week.sum[tbl.week.sum$DayType == "Weekday",]
 median(median_step_weekday$avgsteps)
@@ -250,7 +244,8 @@ median(median_step_weekday$avgsteps)
 median_step_weekend <- tbl.week.sum[tbl.week.sum$DayType == "Weekend",]
 median(median_step_weekend$avgsteps)
 ```
+For weekday, the median of average steps is **`r median(median_step_weekday$avgsteps)`**.
+For weekend, the median of average steps is **`r median(median_step_weekend$avgsteps)`**.
 
-
-
+The mean and median results above indicate weekends are more active with higher mean and median values for average steps per interval.
 
